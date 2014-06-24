@@ -65,6 +65,7 @@ public class Cocos2dxHelper {
 	private static Activity sActivity = null;
 	private static Cocos2dxHelperListener sCocos2dxHelperListener;
 	private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
+	private static Set<OnActivityStartStopListener> onActivityStartStopListeners = new LinkedHashSet<OnActivityStartStopListener>();
 
 
 	// ===========================================================
@@ -113,6 +114,14 @@ public class Cocos2dxHelper {
         return onActivityResultListeners;
     }
     
+    public static void addOnActivityStartStopListener(OnActivityStartStopListener listener) {
+        onActivityStartStopListeners.add(listener);
+    }
+
+    public static Set<OnActivityStartStopListener> getOnActivityStartStopListeners() {
+        return onActivityStartStopListeners;
+    }
+
     public static boolean isActivityVisible(){
     	return sActivityVisible;
     }
@@ -255,6 +264,12 @@ public class Cocos2dxHelper {
 		Cocos2dxHelper.sCocos2dSound.end();
 	}
 
+  public static void onStart() {
+      for (OnActivityStartStopListener listener : Cocos2dxHelper.onActivityStartStopListeners) {
+          listener.onActivityStart();
+      }
+  }
+
 	public static void onResume() {
 		sActivityVisible = true;
 		if (Cocos2dxHelper.sAccelerometerEnabled) {
@@ -268,6 +283,12 @@ public class Cocos2dxHelper {
 			Cocos2dxHelper.sCocos2dxAccelerometer.disable();
 		}
 	}
+
+  public static void onStop() {
+      for (OnActivityStartStopListener listener : Cocos2dxHelper.onActivityStartStopListeners) {
+          listener.onActivityStop();
+      }
+  }
 
 	public static void onEnterBackground() {
 		sCocos2dSound.onEnterBackground();
@@ -401,4 +422,10 @@ public class Cocos2dxHelper {
 
 		public void runOnGLThread(final Runnable pRunnable);
 	}
+
+  public static interface OnActivityStartStopListener {
+      public void onActivityStart();
+      public void onActivityStop();
+  }
+
 }
