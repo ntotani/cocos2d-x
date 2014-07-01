@@ -49,7 +49,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	// Fields
 	// ===========================================================
 	
-	private Cocos2dxGLSurfaceView mGLSurfaceView;
+	protected Cocos2dxGLSurfaceView mGLSurfaceView;
 	private Cocos2dxHandler mHandler;
 	private static Cocos2dxActivity sContext = null;
 	private Cocos2dxVideoHelper mVideoHelper = null;
