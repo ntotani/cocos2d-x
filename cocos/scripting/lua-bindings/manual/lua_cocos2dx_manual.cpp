@@ -1233,7 +1233,7 @@ static int lua_cocos2dx_Layer_setAccelerometerInterval(lua_State* L)
             goto tolua_lerror;
 #endif
         double interval = tolua_tonumber(L, 2, 0);
-        Device::setAccelerometerEnabled(interval);
+        Device::setAccelerometerInterval(interval);
         return 0;
     }
     
